@@ -1,15 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <button class="choices">Rock</button>
-  <button class="choices">Paper</button>
-  <button class="choices">Scissors</button>
-  <button class="reset">Play Again</button>
-  <script src="index.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Rock-Paper-Scissors</h1>
+    <div class="img-container">
+      <button class="choices" data-id="Rock">
+        <img src="img/rock.png" alt="rock emoji" />
+      </button>
+      <button class="choices" data-id="Paper">
+        <img src="img/paper.png" alt="paper emoji" />
+      </button>
+      <button class="choices" data-id="Scissors">
+        <img src="img/scissors.png" alt="scissors emoji" />
+      </button>
+    </div>
+    <button class="reset">Play Again</button>
+    <script src="index.js"></script>
+  </body>
 </html>
