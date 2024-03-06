@@ -1,9 +1,12 @@
 let computerScore = 0;
 let playerScore = 0;
+const WINNING_SCORE = 5;
 
-const body = document.querySelector('body');
-const buttons = document.querySelectorAll('button');
-const result = document.createElement('div');
+const body = document.querySelector("body");
+const resetBtn = document.querySelector(".reset");
+const choiceBtns = document.querySelectorAll(".choices");
+const result = document.createElement("div");
+
 function getComputerChoice() {
   const choices = ["Rock", "Paper", "Scissors"];
 
@@ -32,32 +35,43 @@ function playRound(playerSelection, computerSelection) {
   return roundOutcome;
 }
 
-function playGame(playerSelection,computerSelection) {
+function updateGameDisplay() {
 
-  if (
-    playerSelection == "rock" ||
-    playerSelection == "paper" ||
-    playerSelection == "scissors"
-  ) {
-    console.log(playRound(playerSelection, computerSelection));
-  }
+  result.innerHTML += `Computer: ${computerScore}, Player: ${playerScore}`;
 
-  console.log(`Computer: ${computerScore}, Player: ${playerScore}`);
-
-  if (computerScore > playerScore) {
-    console.log("Game Over, you lose!");
-  } else if (computerScore < playerScore) {
-    console.log("Congratulations, you win!");
-  } else {
-    console.log("Game Over! It's a tie!");
+  if (playerScore >= WINNING_SCORE || computerScore >= WINNING_SCORE) {
+    if (computerScore > playerScore) {
+      result.innerHTML +="Game Over, you lose!";
+    } else if (computerScore < playerScore) {
+      result.innerHTML +="Congratulations, you win!";
+    } else {
+      result.innerHTML +="Game Over! It's a tie!";
+    }
+    choiceBtns.forEach((btn)=>{
+      btn.disabled = true;
+    })
   }
 }
 
-buttons.forEach((btn)=>{
-  btn.addEventListener('click',()=>{
-    computerSelection = getComputerChoice();
-    result.innerHTML = playRound(btn.textContent,computerSelection);
-    body.appendChild(result);
-  })
-})
+function resetGame(){
+  playerScore = 0;
+  computerScore = 0;
+  result.innerHTML = '';
 
+  choiceBtns.forEach((btn)=>{
+    btn.disabled = false;
+  })
+}
+
+choiceBtns.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    computerSelection = getComputerChoice();
+    playerSelection = btn.textContent;
+    result.innerHTML = playRound(playerSelection, computerSelection);
+    body.appendChild(result);
+    updateGameDisplay();
+  });
+});
+
+
+resetBtn.addEventListener("click",resetGame);
