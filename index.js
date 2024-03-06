@@ -1,6 +1,9 @@
 let computerScore = 0;
 let playerScore = 0;
 
+const body = document.querySelector('body');
+const buttons = document.querySelectorAll('button');
+const result = document.createElement('div');
 function getComputerChoice() {
   const choices = ["Rock", "Paper", "Scissors"];
 
@@ -9,7 +12,6 @@ function getComputerChoice() {
 
 function playRound(playerSelection, computerSelection) {
   let roundOutcome = "";
-
   playerSelection =
     playerSelection.charAt(0).toUpperCase() +
     playerSelection.slice(1).toLowerCase();
@@ -22,38 +24,40 @@ function playRound(playerSelection, computerSelection) {
     (playerSelection === "Scissors" && computerSelection === "Paper")
   ) {
     roundOutcome = `You win! ${playerSelection} beats ${computerSelection}`;
-    playerScore+=1;
+    playerScore += 1;
   } else {
     roundOutcome = `You lose! ${computerSelection} beats ${playerSelection}`;
-    computerScore+=1;
+    computerScore += 1;
   }
   return roundOutcome;
 }
 
-function playGame(){
-  for(let i = 0; i <5;){
-    const computerSelection = getComputerChoice();
-    playerSelection = prompt("Enter either \"Rock\",\"Paper\" or \"Scissors\"");
+function playGame(playerSelection,computerSelection) {
 
-    playerSelection = playerSelection.toLowerCase();
-
-    if(playerSelection== 'rock' || playerSelection=='paper'|| playerSelection == 'scissors'){
-      console.log(`Round ${i+1}`);
-      console.log(playRound(playerSelection,computerSelection));
-      i++
-    } else{
-      console.log('Invalid input! Please enter again!');
-    }
+  if (
+    playerSelection == "rock" ||
+    playerSelection == "paper" ||
+    playerSelection == "scissors"
+  ) {
+    console.log(playRound(playerSelection, computerSelection));
   }
+
   console.log(`Computer: ${computerScore}, Player: ${playerScore}`);
 
-  if(computerScore>playerScore){
-    console.log('Game Over, you lose!');
-  } else if(computerScore<playerScore){
-    console.log('Congratulations, you win!');
-  } else{
-    console.log('Game Over! It\'s a tie!');
+  if (computerScore > playerScore) {
+    console.log("Game Over, you lose!");
+  } else if (computerScore < playerScore) {
+    console.log("Congratulations, you win!");
+  } else {
+    console.log("Game Over! It's a tie!");
   }
 }
 
-playGame();
+buttons.forEach((btn)=>{
+  btn.addEventListener('click',()=>{
+    computerSelection = getComputerChoice();
+    result.innerHTML = playRound(btn.textContent,computerSelection);
+    body.appendChild(result);
+  })
+})
+
